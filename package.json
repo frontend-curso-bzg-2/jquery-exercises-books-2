@@ -1,0 +1,15 @@
+{
+  "name": "booksapp",
+  "version": "1.0.0",
+  "description": "App Google Books",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "lite-server -c configs/my-config.json"
+  },
+  "author": "Andres Escobar",
+  "license": "ISC",
+  "devDependencies": {
+    "lite-server": "^2.3.0"
+  }
+}
