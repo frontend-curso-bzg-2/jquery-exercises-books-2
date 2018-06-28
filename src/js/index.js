@@ -171,8 +171,7 @@ function getContent(url, callback, param){
             type: 'GET',
             dataType: 'text',
             success: function(response){                
-                $("#content").html(response);   
-                console.log(param);              
+                $("#content").html(response);                                                
                 if(param){
                     callback(param);                  
                 }else {
