@@ -1,3 +1,4 @@
+
 var routes = [
     {
         "path": "/",
@@ -58,6 +59,13 @@ var routes = [
                     return elem.id == id;
                 });
 
+                var ract = new Ractive({
+                    target: "#book",
+                    template: "#templateBook",
+                    data: item.volumeInfo
+                });
+
+                /**
                 let template;
 
                 $.ajax({
@@ -88,7 +96,7 @@ var routes = [
                         console.log(status);
                     }
 
-            });
+            }); */
         });
         }
     }
