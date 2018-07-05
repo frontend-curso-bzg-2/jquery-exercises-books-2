@@ -1,61 +1,70 @@
 import '../css/styles.css';
-import '../images/thumbnails/book-1.jpg';
+import Ractive from "ractive/ractive.min.js";
 
 var routes = [
     {
         "path": "/",
         "component": "list.html",
         "controller": function(){
-            $.getJSON('./js/books.json').done(function(response){
+            $.getJSON('./data/books.json').done(function(response){
                 let items = response.items;
+                var ract = new Ractive({
+                    target: "#books",
+                    template: "#templateBooks",
+                    data: {items: items}
+                });
+                
+                /**
                 let template;
 
                 $.ajax(
                     {
-                    url: './components/templates/card.html',
-                    type: 'GET',
-                    dataType: 'text',
-                    success: function(response){
-                        template = response;
-                        for(let i=0; i < items.length; i++){
-                            let newTemplate = template.slice(0);
-                            let volInfo = items[i].volumeInfo;
-                            let id = items[i].id;
+                        url: './components/templates/card.html',
+                        type: 'GET',
+                        dataType: 'text',
+                        success: function(response){
+                            template = response;
+                            for(let i=0; i < items.length; i++){
+                                let newTemplate = template.slice(0);
+                                let volInfo = items[i].volumeInfo;
+                                let id  = items[i].id;
+                                let keys = Object.keys(volInfo);
+                                let link = "#/detail/"+id;
+                                newTemplate = newTemplate.replace("{{routeLink}}", link).slice(0);
 
-                            let keys = Object.keys(volInfo);
-                            let link = "#/detail/"+id;
-
-                            newTemplate = newTemplate.replace("{{routeLink}}", link).slice(0);
-
-                            for(let j=0; j < keys.length; j++){
-                                if(keys[j] == 'imageLinks'){
-                                    let urlImage =  volInfo[keys[j]].smallThumbnail;
-                                    newTemplate = newTemplate.replace("{{" + keys[j] +"}}", urlImage).slice(0);
-                                }else {
-                                    let textBook = volInfo[keys[j]];
-                                    newTemplate = newTemplate.replace("{{" + keys[j] +"}}", textBook).slice(0);
+                                for(let j=0; j < keys.length; j++){
+                                    if(keys[j] == 'imageLinks'){
+                                       let urlImage = volInfo[keys[j]].smallThumbnail;
+                                       newTemplate = newTemplate.replace("{{" + keys[j] + "}}", urlImage).slice(0); 
+                                    }else {
+                                        let textBook = volInfo[keys[j]];
+                                        newTemplate = newTemplate.replace("{{" + keys[j] + "}}", textBook).slice(0); 
+                                    }
                                 }
-                            }
+                                
+                                $('#books').append(newTemplate);
 
-                            $("#books").append(newTemplate);
+                            }                            
+                        },
+                        error: function(error){
+                            console.log(error);
+                        },
+                        complete: function(xhr, status){
+                            console.log(status);
                         }
-                    },
-                    error: function(error){
-                        console.log(error);
-                    },
-                    complete: function(xhr, status){
-                        console.log(status);
                     }
-
-                });            
-            })
+                );
+                 */
+        
+                
+            });
         }
     },
     {
         "path": "/detail/:id",
         "component": "detail.html",
         "controller": function(id){
-            $.getJSON('./js/books.json').done(function(response){
+            $.getJSON('./data/books.json').done(function(response){
                 let items = response.items;
                 let item = items.find(function(elem){
                     return elem.id == id;
