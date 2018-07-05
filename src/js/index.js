@@ -1,3 +1,5 @@
+import '../css/styles.css';
+import '../images/thumbnails/book-1.jpg';
 
 var routes = [
     {
