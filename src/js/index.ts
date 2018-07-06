@@ -1,5 +1,7 @@
 import '../css/styles.css';
-import Ractive from "ractive/ractive.min.js";
+import * as $ from 'jquery';
+import Ractive from 'ractive/ractive.min.js';
+
 
 var routes = [
     {
@@ -137,14 +139,14 @@ $(document).ready(function(){
     });
 
     $(window).on('load', function(e){
-        let location = e.originalEvent.target.location;
+        let location = e.originalEvent.target['location'];
         router(location);
     });
 
     
     $(window).on('hashchange', function(e){
         let event = e.originalEvent;
-        router(event.target.location);              
+        router(event.target['location']);              
     });    
     
 });
@@ -183,7 +185,7 @@ function router(window){
     });    
 }
 
-function getContent(url, callback, param){
+function getContent(url, callback, param?){
     $.ajax(
         {
             url: url,
@@ -205,53 +207,4 @@ function getContent(url, callback, param){
             }
         }
     );
-}
-
-function loadBooks(){
-    $.getJSON('./js/books.json').done(function(response){        
-        
-        let items = response.items;
-        let template;
-        $.ajax(
-            {
-                url: './components/templates/card.html',
-                type: 'GET',
-                dataType: 'text',
-                success: function(response){                
-                    template = response;                     
-
-                    for(let i = 0; i < items.length; i++){
-                        newTemplate = template.slice(0);
-                        let volInfo = items[i].volumeInfo; 
-                        let id = items[i].id;                       
-                        let keys = Object.keys(volInfo);                          
-                        let link = "#/detail/"+id;                        
-                        newTemplate = newTemplate.replace("{{routeLink}}", link).slice(0);
-
-                        for(let j=0; j < keys.length; j++){                                                      
-                            if(keys[j] == "imageLinks"){                                
-                                let st = JSON.stringify(volInfo[keys[j]].smallThumbnail);
-                                newTemplate = newTemplate.replace("{{"+ keys[j] +"}}", st).slice(0);
-                            }
-                            else{                                 
-                                let st = JSON.stringify(volInfo[keys[j]]);
-                                newTemplate = newTemplate.replace("{{"+ keys[j] +"}}", st).slice(0);                                                                
-                            }                                 
-                            if(j == (keys.length-1)){
-                                $("#books").append(newTemplate);        
-                            }
-                        }                                                            
-                    }                    
-                },
-                error: function(error){
-                    console.log(error);
-                },
-                complete: function(xhr, status){
-                    console.log(status);
-                }
-            }
-        );        
-
-
-    }); 
 }
