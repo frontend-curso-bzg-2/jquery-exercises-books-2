@@ -1,6 +1,5 @@
 import '../css/styles.css';
 import * as $ from 'jquery';
-import Ractive from 'ractive/ractive.min.js';
 
 
 var routes = [
@@ -11,53 +10,10 @@ var routes = [
             $.getJSON('./data/books.json').done(function(response){
                 let items = response.items;
                 var ract = new Ractive({
-                    target: "#books",
+                    el: "#books",                    
                     template: "#templateBooks",
                     data: {items: items}
-                });
-                
-                /**
-                let template;
-
-                $.ajax(
-                    {
-                        url: './components/templates/card.html',
-                        type: 'GET',
-                        dataType: 'text',
-                        success: function(response){
-                            template = response;
-                            for(let i=0; i < items.length; i++){
-                                let newTemplate = template.slice(0);
-                                let volInfo = items[i].volumeInfo;
-                                let id  = items[i].id;
-                                let keys = Object.keys(volInfo);
-                                let link = "#/detail/"+id;
-                                newTemplate = newTemplate.replace("{{routeLink}}", link).slice(0);
-
-                                for(let j=0; j < keys.length; j++){
-                                    if(keys[j] == 'imageLinks'){
-                                       let urlImage = volInfo[keys[j]].smallThumbnail;
-                                       newTemplate = newTemplate.replace("{{" + keys[j] + "}}", urlImage).slice(0); 
-                                    }else {
-                                        let textBook = volInfo[keys[j]];
-                                        newTemplate = newTemplate.replace("{{" + keys[j] + "}}", textBook).slice(0); 
-                                    }
-                                }
-                                
-                                $('#books').append(newTemplate);
-
-                            }                            
-                        },
-                        error: function(error){
-                            console.log(error);
-                        },
-                        complete: function(xhr, status){
-                            console.log(status);
-                        }
-                    }
-                );
-                 */
-        
+                });                                       
                 
             });
         }
@@ -73,43 +29,10 @@ var routes = [
                 });
 
                 var ract = new Ractive({
-                    target: "#book",
+                    el: "#book",
                     template: "#templateBook",
                     data: item.volumeInfo
-                });
-
-                /**
-                let template;
-
-                $.ajax({
-                    url: './components/templates/book.html',
-                    type: 'GET',
-                    dataType: 'text',
-                    success: function(response){
-                        template = response;                                                                                                                 
-                        let newTemplate = template.slice(0);
-                        let volInfo = item.volumeInfo;                                
-                        let keys = Object.keys(volInfo);    
-                        for(let j=0; j < keys.length; j++){
-                            if(keys[j] == 'imageLinks'){
-                                let urlImage = volInfo[keys[j]].smallThumbnail;
-                                newTemplate = newTemplate.replace("{{" + keys[j] + "}}", urlImage).slice(0); 
-                            }else {
-                                let textBook = volInfo[keys[j]];
-                                newTemplate = newTemplate.replace("{{" + keys[j] + "}}", textBook).slice(0); 
-                            }
-                        }
-
-                        $('#book').append(newTemplate);
-                    },
-                    error: function(error){
-                        console.log(error);
-                    },
-                    complete: function(xhr, status){
-                        console.log(status);
-                    }
-
-            }); */
+                });                
         });
         }
     }
