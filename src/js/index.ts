@@ -1,8 +1,10 @@
 import '../css/styles.css';
 import * as $ from 'jquery';
+import { Route } from "./models/route";
 
+var routes : Route[];
 
-var routes = [
+routes = [
     {
         "path": "/",
         "component": "list.html",
